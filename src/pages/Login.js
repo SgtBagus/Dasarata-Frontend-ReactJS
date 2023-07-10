@@ -29,7 +29,12 @@ class Login extends PureComponent {
 
         const token = localStorage.getItem('token');
         if (token) {
-            navigate('/admin');
+            const { role } = JSON.parse(localStorage.getItem('user'));
+            if (role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/sales');
+            }
         }
     }
 
@@ -63,8 +68,15 @@ class Login extends PureComponent {
             };
 
             try {
-                const res = await axios.post('http://127.0.0.1:8000/api/login', payload);
-                localStorage.setItem('token', res.data.token);
+                const { data: { token, user } } = await axios.post('http://127.0.0.1:8000/api/login', payload);
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
+
+                if (user.role === 'admin') {
+                    navigate('/admin');
+                } else {
+                    navigate('/sales');
+                }
                 navigate('/admin');
             } catch (error) {
                 NotificationManager.error('Terjadi Kesalahan !', CATCH_ERROR(error), 5000);
@@ -78,11 +90,6 @@ class Login extends PureComponent {
 
     render() {
         const { form: { email, password } } = this.state;
-        const { navigate } = this.props;
-
-        if (localStorage.getItem('token')) {
-            navigate('/admin');
-        }
 
         return (
             <div className="container" style={{ marginTop: '120px' }}>
