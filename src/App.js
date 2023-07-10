@@ -1,16 +1,21 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import {
+  Routes, Route, useNavigate,
+} from 'react-router-dom';
 
 import Admin from './pages/Admin';
 import Sales from './pages/Sales';
 import Login from './pages/Login';
 
-const App = () => (
-  <Routes>
-    <Route path="/" element={(<Login />)} />
-    <Route path="/admin" element={<Admin />} />
-    <Route path="/sales" element={<Sales />} />
-  </Routes>
-);
+function App() {
+  const navigate = useNavigate();
 
+   return (
+    <Routes>
+      <Route path="/" element={<Admin navigate={navigate} />} />
+      <Route path="/login" element={<Login navigate={navigate} />} />
+      <Route path="/sales" element={<Sales navigate={navigate} />} />
+    </Routes>
+  );
+}
 export default App;
