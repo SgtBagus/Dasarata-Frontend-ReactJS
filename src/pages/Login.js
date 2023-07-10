@@ -24,6 +24,15 @@ class Login extends PureComponent {
       };
     }
 
+    componentDidMount = () => {
+        const { navigate } = this.props;
+
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/admin');
+        }
+    }
+
     changeInputHandler = async (type, val, e) => {
         const { form, isFormSubmitted } = this.state;
 
@@ -54,7 +63,7 @@ class Login extends PureComponent {
             };
 
             try {
-                const res = await axios.post('http://localhost:8000/api/login', payload);
+                const res = await axios.post('http://127.0.0.1:8000/api/login', payload);
                 localStorage.setItem('token', res.data.token);
                 navigate('/admin');
             } catch (error) {
@@ -69,6 +78,11 @@ class Login extends PureComponent {
 
     render() {
         const { form: { email, password } } = this.state;
+        const { navigate } = this.props;
+
+        if (localStorage.getItem('token')) {
+            navigate('/admin');
+        }
 
         return (
             <div className="container" style={{ marginTop: '120px' }}>
