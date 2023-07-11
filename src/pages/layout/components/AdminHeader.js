@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const AdminHeader = (props) => {
   const { logoutHanlder } = props;
@@ -33,5 +34,14 @@ const AdminHeader = (props) => {
     </nav>
   );
 };
+
+AdminHeader.propTypes = {
+  logoutHanlder: PropTypes.func,
+};
+
+AdminHeader.defaultProps = {
+  logoutHanlder: () => {},
+};
+
 
 export default AdminHeader;

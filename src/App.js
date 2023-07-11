@@ -6,6 +6,9 @@ import {
 import Layout from './pages/layout';
 
 import Admin from './pages/Admin';
+import Product from './pages/Product/index';
+import ProductForm from './pages/Product/Form';
+
 import Sales from './pages/Sales';
 import Login from './pages/Login';
 
@@ -30,7 +33,8 @@ function App() {
       <Route path="/login" element={<Login navigate={useNavigate()} useEffect={useEffect} />} />
       <Route path="/admin" element={<LayoutAdmin />}>
         <Route index element={<Admin navigate={useNavigate()} />} />
-        <Route path="product" element={<Sales navigate={useNavigate()} />} />
+        <Route path="/admin/product" element={<Product navigate={useNavigate()} />} />
+        <Route path="/admin/product/create" element={<ProductForm navigate={useNavigate()} />} />
       </Route>
       <Route path="/sales" element={<Sales navigate={useNavigate()} />} />
       <Route path="*" element={<NoMatch />} />
